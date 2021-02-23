@@ -39,5 +39,34 @@ namespace MoodAnalyserDay11
             }
         }
 
+        /// <summary>
+        /// UC-5 For parameterised constructor by pssing messge parameter to the class method
+        /// </summary>
+        /// <param name="className"></param>
+        /// <param name="constructorName"></param>
+        /// <returns></returns>
+        public static object CreateMoodAnalyseUsingParameterizedConstructor(string className, string constructorName)
+        {
+            Type type = typeof(AnalyseMood);
+            if (type.Name.Equals(className) || type.FullName.Equals(className))
+            {
+                if (type.Name.Equals(constructorName))
+                {
+                    ConstructorInfo ctor = type.GetConstructor(new[] { typeof(string) });
+                    object instance = ctor.Invoke(new object[] { "HAPPY" });
+                    return instance;
+                }
+
+                else
+                {
+                    throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.NO_SUCH_METHOD, "Method not found");
+                }
+            }
+            else
+            {
+                throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.NO_SUCH_CLASS, "Class not found");
+            }
+        }
+
     }
 }
