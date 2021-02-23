@@ -2,19 +2,28 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MoodAnalyserDay12
+namespace MoodAnalyserDay11
 {
+    /// <summary>
+    /// UC3 Custom exceptions
+    /// </summary>
+    /// <seealso cref="System.Exception" />
     public class MoodAnalyserCustomException : Exception
     {
-        ExceptionType type;
+        /// <summary>
+        /// 
+        /// </summary>
         public enum ExceptionType
         {
-            NO_SUCH_CLASS,
-            NO_SUCH_METHOD,
-            EMPTY_MESSAGE,
-            NULL_MESSAGE,
+            NULL_MESSAGE, EMPTY_MESSAGE, NO_SUCH_CLASS, NO_SUCH_METHOD,
         }
+        public ExceptionType type;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MoodAnalyserCustomException"/> class.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <param name="message">The message.</param>
         public MoodAnalyserCustomException(ExceptionType type, string message) : base(message)
         {
             this.type = type;
