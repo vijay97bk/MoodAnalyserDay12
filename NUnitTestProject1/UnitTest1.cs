@@ -1,32 +1,115 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
+using NUnit.Framework;
+using MoodAnalyserDay11;
 
-namespace MoodAnalyserDay11
+
+namespace NUnitTestProject
 {
-    /// <summary>
-    /// UC3 Custom exceptions
-    /// </summary>
-    /// <seealso cref="System.Exception" />
-    public class MoodAnalyserCustomException : Exception
+
+    public class Tests
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        public enum ExceptionType
+
+        MoodAnalyserFactory moodAnalyserFactory;
+        [SetUp]
+        public void Setup()
         {
-            NULL_MESSAGE, EMPTY_MESSAGE,
+            moodAnalyserFactory = new MoodAnalyserFactory();
+
         }
-        public ExceptionType type;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MoodAnalyserCustomException"/> class.
+        /// TC-4.1 Given MoodAnalyse Class Name Should Return MoodAnalyser Object
         /// </summary>
-        /// <param name="type">The type.</param>
-        /// <param name="message">The message.</param>
-        public MoodAnalyserCustomException(ExceptionType type, string message) : base(message)
+        [Test]
+        public void MoodAnalyserClassName_ShouldReturnMoodAnalyserObject()
         {
-            this.type = type;
+            string message = null;
+            object expected = new AnalyseMood(message);
+            object obj = MoodAnalyserFactory.CreateMoodAnalyse("MoodAnalyserAppWithCore.MoodAnalyser", "MoodAnalyser");
+            expected.Equals(obj);
+        }
+
+        /// <summary>
+        /// TC-4.2 Given MoodAnalyse Class Name When Improper Should Throw Exception
+        /// </summary>
+        [Test]
+        public void MoodAnalyserClassName_WhenImproper_ShouldThrowMoodAnalyserException()
+        {
+            object obj = null;
+            string message = null;
+            string expected = "Class not found";
+            try
+            {
+                obj = MoodAnalyserFactory.CreateMoodAnalyse("MoodAnalyserAppWithCore.Mood", "Mood");
+            }
+            catch (MoodAnalyserCustomException exception)
+            {
+                Assert.AreEqual(expected, exception.Message);
+            }
+        }
+
+        /// <summary>
+        /// TC-4.3 Given MoodAnalyse Class Name When Constructor is Improper Should Throw Exception
+        /// </summary>
+        [Test]
+        public void MoodAnalyserClassName_WhenConstructorIsImproper_ShouldThrowMoodAnalyserException()
+        {
+            object obj = null;
+            string message = null;
+            string expected = "Method not found";
+            try
+            {
+                obj = MoodAnalyserFactory.CreateMoodAnalyse("MoodAnalyserAppWithCore.MoodAnalyser", "AnalyserMood");
+            }
+            catch (MoodAnalyserCustomException exception)
+            {
+                Assert.AreEqual(expected, exception.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// TC-5.1  Given MoodAnalyse Class Name Should Return MoodAnalyser Object
+        /// </summary>
+        [Test]
+        public void MoodAnalyserClassName_ShouldReturnMoodAnalyserObject_UsingParametrizedConstructor()
+        {
+            object expected = new AnalyseMood("HAPPY");
+            object obj = MoodAnalyserFactory.CreateMoodAnalyseUsingParameterizedConstructor("MoodAnalyserAppWithCore.MoodAnalyser", "MoodAnalyser");
+            expected.Equals(obj);
+        }
+
+        /// <summary>
+        /// TC-5.2  Given MoodAnalyse Class Name When Improper Should Throw Exception
+        /// </summary>
+        [Test]
+        public void MoodAnalyserClassName_WhenImproper_UsingParametrizedConstructor_ShouldThrowExcpetion()
+        {
+            string expected = "Class not found";
+            try
+            {
+                object obj = MoodAnalyserFactory.CreateMoodAnalyseUsingParameterizedConstructor("MoodAnalyserAppWithCore.Mood", "MoodAnalyser");
+            }
+            catch (MoodAnalyserCustomException exception)
+            {
+                Assert.AreEqual(expected, exception.Message);
+            }
+        }
+
+        /// <summary>
+        /// TC-5.3  Given MoodAnalyse Class Name When Constructor is Improper Should Throw Exception
+        /// </summary>
+        [Test]
+        public void MoodAnalyserClassName_WhenConstructorIsImproper_UsingParametrizedConstructor_ShouldThrowExcpetion()
+        {
+            string expected = "Method not found";
+            try
+            {
+                object obj = MoodAnalyserFactory.CreateMoodAnalyseUsingParameterizedConstructor("MoodAnalyserAppWithCore.MoodAnalyser", "Mood");
+            }
+            catch (MoodAnalyserCustomException exception)
+            {
+                Assert.AreEqual(expected, exception.Message);
+            }
         }
     }
 }
