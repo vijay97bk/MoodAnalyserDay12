@@ -29,7 +29,7 @@ namespace NUnitTestProject
         }
 
         /// <summary>
-        /// TC-4.2 Given MoodAnalyse Class Name When Improper Should Throw Exception
+        /// TC-4.2 Given Improper MoodAnalyse Class Name Should Throw Exception
         /// </summary>
         [Test]
         public void MoodAnalyserClassName_WhenImproper_ShouldThrowMoodAnalyserException()
@@ -74,7 +74,7 @@ namespace NUnitTestProject
         public void MoodAnalyserClassName_ShouldReturnMoodAnalyserObject_UsingParametrizedConstructor()
         {
             object expected = new AnalyseMood("HAPPY");
-            object obj = MoodAnalyserFactory.CreateMoodAnalyseUsingParameterizedConstructor("MoodAnalyserAppWithCore.MoodAnalyser", "MoodAnalyser");
+            object obj = MoodAnalyserFactory.CreateMoodAnalyseUsingParameterizedConstructor("MoodAnalyserAppWithCore.MoodAnalyser", "MoodAnalyser", "Happy");
             expected.Equals(obj);
         }
 
@@ -87,7 +87,7 @@ namespace NUnitTestProject
             string expected = "Class not found";
             try
             {
-                object obj = MoodAnalyserFactory.CreateMoodAnalyseUsingParameterizedConstructor("MoodAnalyserAppWithCore.Mood", "MoodAnalyser");
+                object obj = MoodAnalyserFactory.CreateMoodAnalyseUsingParameterizedConstructor("MoodAnalyserAppWithCore.Mood", "MoodAnalyser", "Happy");
             }
             catch (MoodAnalyserCustomException exception)
             {
@@ -104,7 +104,7 @@ namespace NUnitTestProject
             string expected = "Method not found";
             try
             {
-                object obj = MoodAnalyserFactory.CreateMoodAnalyseUsingParameterizedConstructor("MoodAnalyserAppWithCore.MoodAnalyser", "Mood");
+                object obj = MoodAnalyserFactory.CreateMoodAnalyseUsingParameterizedConstructor("MoodAnalyserAppWithCore.MoodAnalyser", "Mood", "Happy");
             }
             catch (MoodAnalyserCustomException exception)
             {

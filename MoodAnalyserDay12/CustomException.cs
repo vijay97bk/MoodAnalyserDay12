@@ -15,7 +15,7 @@ namespace MoodAnalyserDay11
         /// </summary>
         public enum ExceptionType
         {
-            NULL_MESSAGE, EMPTY_MESSAGE, NO_SUCH_CLASS, NO_SUCH_METHOD,
+            NULL_MESSAGE, EMPTY_MESSAGE, NO_SUCH_CLASS, NO_SUCH_CONSTRUCTOR,
         }
         public ExceptionType type;
 

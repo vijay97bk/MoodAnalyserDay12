@@ -35,7 +35,7 @@ namespace MoodAnalyserDay11
             }
             else
             {
-                throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.NO_SUCH_METHOD, "Method not found");
+                throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.NO_SUCH_CONSTRUCTOR, "Method not found");
             }
         }
 
@@ -45,7 +45,7 @@ namespace MoodAnalyserDay11
         /// <param name="className"></param>
         /// <param name="constructorName"></param>
         /// <returns></returns>
-        public static object CreateMoodAnalyseUsingParameterizedConstructor(string className, string constructorName)
+        public static object CreateMoodAnalyseUsingParameterizedConstructor(string className, string constructorName, string message)
         {
             Type type = typeof(AnalyseMood);
             if (type.Name.Equals(className) || type.FullName.Equals(className))
@@ -53,18 +53,42 @@ namespace MoodAnalyserDay11
                 if (type.Name.Equals(constructorName))
                 {
                     ConstructorInfo ctor = type.GetConstructor(new[] { typeof(string) });
-                    object instance = ctor.Invoke(new object[] { "HAPPY" });
+                    object instance = ctor.Invoke(new object[] { message });
                     return instance;
                 }
 
                 else
                 {
-                    throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.NO_SUCH_METHOD, "Method not found");
+                    throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.NO_SUCH_CONSTRUCTOR, "Method not found");
                 }
             }
             else
             {
                 throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.NO_SUCH_CLASS, "Class not found");
+            }
+        }
+
+        /// <summary>
+        /// Use Reflection to invoke Method
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="methodName"></param>
+        /// <returns></returns>
+        public static string InvokeAnalyseMood(string message, string methodName)
+        {
+            try
+            {
+                Type type = Type.GetType("MoodAnalyserAppWithCore.MoodAnalyser");
+                object moodAnalyseObject = MoodAnalyserFactory.CreateMoodAnalyseUsingParameterizedConstructor("MoodAnalyserAppWithCore.MoodAnalyser", "MoodAnalyser", "Happy");
+                MethodInfo analyseMoodInfo = type.GetMethod(methodName);
+                object mood = analyseMoodInfo.Invoke(moodAnalyseObject, null);
+                return mood.ToString();
+
+            }
+            catch (NullReferenceException)
+            {
+                throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.NO_SUCH_CONSTRUCTOR, "Method not found");
+
             }
         }
 
